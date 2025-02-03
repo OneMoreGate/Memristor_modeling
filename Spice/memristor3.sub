@@ -1,0 +1,14 @@
+.subckt memristor3 top bot
+B1 top bot I=(V(top)-V(bot))/(Resistance()+Re)
+B2 0 uval I=dudt()
+C1 uval 0 1
+.func Resistance() {rhoins*Lchan/(pi*rch**2)*(1+(rhoins/rhomet-1)*u()**2)**(-1)}
+.func Gammath() {2*pi*Lchan*kappa*(ln(1/u()))**(-1)}
+.func dHdu() {pi*Lchan*rch**2*( cp*deltaT*uExpression()+ 2*deltahtr*u())}
+.func uExpression() {(1 - u()**2 + 2*u()**2*ln(u())) / (2*u()*ln(u())**2)}
+.func dudt() {dHdu()**(-1)*(Resistance()*I(B1)**2-Gammath()*deltaT)}
+.func u() {max(V(uval), 1e-6)}
+.IC V(uval)=1e-6
+.param cp=2.6e6 deltahtr=1.6e8 kappa=0.9 rhomet=1e-4 rhoins=1.6e-2 deltaT=784 rch=3e-8 Lchan=2e-8 Re=2400
+.backanno
+.ends memristor3
