@@ -1,6 +1,0 @@
-.subckt ts top bot
-B1 top bot I = if(current_state() = on_state, U()/R_on,  U()/R_off) 
-.func U() {V(top)-V(bot)}
-.func current_state() {if( abs(U()) > V_th,  on_state, if(abs(U()) < V_hold, off_state,  current_state))}
-.param R_on=1e3 R_off=1e9 V_th = 0.3 V_hold = 0.05 off_state = 0 on_state = 1 current_state = 0
-.ends ts
