@@ -1,0 +1,10 @@
+.subckt memristor3 top bot
+B1 top bot I=(V(top)-V(bot))/Resistance()
+B2 0 w I=if((V(w) > 1) | (V(w) < 0), 0, f())
+C1 w 0 1
+.func U() {V(top)-V(bot)}
+.func f() {if(abs(U())>Vth, K * sgn(U()) * (exp(abs(U())/V0) - exp(Vth/V0)), 0)}
+.func Resistance() {Ron * V(w) + Roff * (1 - V(w))}
+.IC V(w)={w0}
+.param Vth=0.01 K=1e3 V0=50e-3 Ron=3k Roff=10k
+.ends memristor3
