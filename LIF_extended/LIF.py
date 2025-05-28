@@ -2,7 +2,7 @@ import numpy as np
 
 class LIF():
     I_inj: float = 1e-4
-    C_m: float = 1e-6
+    C_m: float = 1e-9
     R_m: float = 1e6
     V_reset: float = 0.1
     V_0: float = 0.05
@@ -21,7 +21,7 @@ class LIF():
     def initial_conditions(self, V_init = V_init) -> None:
         self.V_init = V_init
 
-    def calculate(self, time_interval: float = 0.1, dots: int = 100000) -> tuple:
+    def calculate(self, time_interval: float = 0.01, dots: int = 100000) -> tuple:
         self.V = [self.V_init]
         time_array = np.linspace(0, time_interval, dots)
         delta_t = time_array[1] - time_array[0]
